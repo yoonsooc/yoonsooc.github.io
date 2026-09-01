@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+      <title>NKNB&#039;s Blog</title>
+      <link>https://yoonsooc.github.io</link>
+      <description>Last 10 notes on NKNB&#039;s Blog</description>
+      <generator>Quartz -- quartz.jzhao.xyz</generator>
+      <item>
+    <title>Tag Index</title>
+    <link>https://yoonsooc.github.io/tags/</link>
+    <guid>https://yoonsooc.github.io/tags/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Tue, 01 Sep 2026 02:29:00 GMT</pubDate>
+  </item><item>
+    <title>Posts</title>
+    <link>https://yoonsooc.github.io/</link>
+    <guid>https://yoonsooc.github.io/</guid>
+    <description><![CDATA[ 엔지니어링과 단상에 대한 글을 모아 둔 공간입니다. ]]></description>
+    <pubDate>Fri, 29 May 2026 07:19:30 GMT</pubDate>
+  </item>
+    </channel>
+  </rss>
