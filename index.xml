@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+      <title>YSC&#039;s Garden</title>
+      <link>https://yoonsooc.github.io</link>
+      <description>Last 10 notes on YSC&#039;s Garden</description>
+      <generator>Quartz -- quartz.jzhao.xyz</generator>
+      <item>
+    <title>architecture</title>
+    <link>https://yoonsooc.github.io/tags/architecture</link>
+    <guid>https://yoonsooc.github.io/tags/architecture</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sat, 03 Oct 2026 03:35:08 GMT</pubDate>
+  </item><item>
+    <title>data</title>
+    <link>https://yoonsooc.github.io/tags/data</link>
+    <guid>https://yoonsooc.github.io/tags/data</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sat, 03 Oct 2026 03:35:08 GMT</pubDate>
+  </item><item>
+    <title>Tag Index</title>
+    <link>https://yoonsooc.github.io/tags/</link>
+    <guid>https://yoonsooc.github.io/tags/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sat, 03 Oct 2026 03:35:08 GMT</pubDate>
+  </item><item>
+    <title>Notes</title>
+    <link>https://yoonsooc.github.io/thoughts/</link>
+    <guid>https://yoonsooc.github.io/thoughts/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sat, 03 Oct 2026 03:35:03 GMT</pubDate>
+  </item><item>
+    <title>Test</title>
+    <link>https://yoonsooc.github.io/posts/test</link>
+    <guid>https://yoonsooc.github.io/posts/test</guid>
+    <description><![CDATA[  ❓: 추가로 알아볼 내용들 서비스 아키텍쳐 아키텍쳐를 설계할 때는 서비스가 속한 도메인에 가장 큰 영향을 받는다. ]]></description>
+    <pubDate>Fri, 02 Oct 2026 16:15:51 GMT</pubDate>
+  </item><item>
+    <title>Posts</title>
+    <link>https://yoonsooc.github.io/posts/</link>
+    <guid>https://yoonsooc.github.io/posts/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Fri, 29 May 2026 07:19:30 GMT</pubDate>
+  </item><item>
+    <title>Apache Data Formats</title>
+    <link>https://yoonsooc.github.io/thoughts/apache-data-formats</link>
+    <guid>https://yoonsooc.github.io/thoughts/apache-data-formats</guid>
+    <description><![CDATA[ For What AWS CUR을 가공한 서빙데이터를 MySQL에 쑤셔박으면서 처참한 성능을 현업에서 맛보았고, BigQuery 마이그레이션 결과로 개선된 성능을 직접 확인하며, 열 기반 데이터 형식의 필요성을 체감해왔다. ]]></description>
+    <pubDate>Fri, 01 May 2026 15:00:00 GMT</pubDate>
+  </item>
+    </channel>
+  </rss>
