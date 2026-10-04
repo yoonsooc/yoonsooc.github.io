@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>Data Architecture Overview</title><meta charset="utf-8"/><link rel="preload" href="../index-03395163.css" as="style"/><link rel="preload" href="../prescript-ee7931aa.js" as="script"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Inter:ital,wght@0,400;0,600;1,400;1,600&amp;family=JetBrains Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="YSC's Garden"/><meta property="og:title" content="Data Architecture Overview"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Data Architecture Overview"/><meta name="twitter:description" content="Apache Data Formats 데이터 관련 아파치 재단 오픈소스들에 대해 공부하다가 다시 빅데이터 아키텍처에 대해 복습 Abstract 빅데이터 아키텍처들은, “어떻게 하면 방대한 양의 데이터를 정확하게, 혹은 지연 시간 없이 실시간으로 처리하고 보여줄 수 있을까?” 라는 문제에 대한 해결책으로서 발전되어왔다."/><meta property="og:description" content="Apache Data Formats 데이터 관련 아파치 재단 오픈소스들에 대해 공부하다가 다시 빅데이터 아키텍처에 대해 복습 Abstract 빅데이터 아키텍처들은, “어떻게 하면 방대한 양의 데이터를 정확하게, 혹은 지연 시간 없이 실시간으로 처리하고 보여줄 수 있을까?” 라는 문제에 대한 해결책으로서 발전되어왔다."/><meta property="og:image:alt" content="Apache Data Formats 데이터 관련 아파치 재단 오픈소스들에 대해 공부하다가 다시 빅데이터 아키텍처에 대해 복습 Abstract 빅데이터 아키텍처들은, “어떻게 하면 방대한 양의 데이터를 정확하게, 혹은 지연 시간 없이 실시간으로 처리하고 보여줄 수 있을까?” 라는 문제에 대한 해결책으로서 발전되어왔다."/><meta property="twitter:domain" content="yoonsooc.github.io"/><meta property="og:url" content="https://yoonsooc.github.io/thoughts/data-architecture-overview"/><meta property="twitter:url" content="https://yoonsooc.github.io/thoughts/data-architecture-overview"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="Apache Data Formats 데이터 관련 아파치 재단 오픈소스들에 대해 공부하다가 다시 빅데이터 아키텍처에 대해 복습 Abstract 빅데이터 아키텍처들은, “어떻게 하면 방대한 양의 데이터를 정확하게, 혹은 지연 시간 없이 실시간으로 처리하고 보여줄 수 있을까?” 라는 문제에 대한 해결책으로서 발전되어왔다."/><meta name="generator" content="Quartz"/><link href="../index-03395163.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-589c1cea.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-bbc3f7c0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-2911f5d1.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7f220492.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-642859cd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-4f5ec2db.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-c93c6a44.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-8a06014f.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-77d6a441.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-b9366cc4.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-4abc06bd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-274a3dfe.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-94cb6c84.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7262b5a7.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-a5c806d2.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-6bd36952.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-9857b007.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-d3a1a224.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../prescript-ee7931aa.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted%20Grotesk%3Awght%40400%3B700&amp;family=Source%20Sans%20Pro%3Aital%2Cwght%400%2C400%3B0%2C600%3B1%2C400%3B1%2C600&amp;family=IBM%20Plex%20Mono%3Awght%40400%3B600&amp;display=swap"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https://yoonsooc.github.io/thoughts/data-architecture-overview-og-image.webp"/><meta property="og:image:url" content="https://yoonsooc.github.io/thoughts/data-architecture-overview-og-image.webp"/><meta name="twitter:image" content="https://yoonsooc.github.io/thoughts/data-architecture-overview-og-image.webp"/><meta property="og:image:type" content="image/webp"/></head><body data-slug="thoughts/data-architecture-overview" data-basepath><div id="quartz-root" class="page" data-frame="default"><div id="quartz-body"><div class="left sidebar"><div class="hero"><div class="hero-title"><a href="../posts/">YSC's Garden</a></div><div class="hero-subtitle"> </div></div><div class="mobile-only"><div class="spacer"></div></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 0.5rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button" aria-label="Search" aria-expanded="false"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something..." placeholder="Search for something..."/><div class="search-layout" data-preview="true" data-field-priority="[&quot;title&quot;,&quot;content&quot;,&quot;tags&quot;]"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode" aria-label="Dark mode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div></div><nav class="section-nav section-nav-recent" aria-label="Recent"><div class="section-nav-block"><h3><a href="../posts/">Writings</a></h3><ul><li><a href="../posts/서버를-늘리면-연결-정보는-어디에-두나"><span class="section-nav-title">서버를 늘리면 연결 정보는 어디에 두나</span><time datetime="2026-10-04T00:00:00.000Z">Oct 04, 2026</time></a></li></ul></div><div class="section-nav-block"><h3><a href="../thoughts/">Notes</a></h3><ul><li><a href="../thoughts/data-architecture-overview" class="active" aria-current="page"><span class="section-nav-title">Data Architecture Overview</span><time datetime="2026-10-04T14:06:16.922Z">Oct 04, 2026</time></a></li><li><a href="../thoughts/푸시-알림은-놓칠-수-있다"><span class="section-nav-title">푸시 알림은 놓칠 수 있다</span><time datetime="2026-10-04T00:00:00.000Z">Oct 04, 2026</time></a></li><li><a href="../thoughts/서버가-클라이언트에게-먼저-말을-거는-방법"><span class="section-nav-title">서버가 클라이언트에게 먼저 말을 거는 방법</span><time datetime="2026-10-04T00:00:00.000Z">Oct 04, 2026</time></a></li><li><a href="../thoughts/두-저장소를-한-번에-못-바꿀-때"><span class="section-nav-title">두 저장소를 한 번에 못 바꿀 때</span><time datetime="2026-10-04T00:00:00.000Z">Oct 04, 2026</time></a></li></ul><a href="../thoughts/" class="section-nav-more">See 8 more →</a></div></nav></div><div class="center"><div class="page-header"><div class="popover-hint"><h1 class="article-title">Data Architecture Overview</h1><p show-comma="true" class="content-meta"><time datetime="2026-10-04T14:06:16.922Z">Oct 04, 2026</time><span>22 min read</span></p></div></div><article class="popover-hint my_style_width_80"><div class="markdown-preview-view markdown-rendered"><blockquote>
+<p><em><span class="unpublished-link">Apache Data Formats</span> 데이터 관련 아파치 재단 오픈소스들에 대해 공부하다가 다시 빅데이터 아키텍처에 대해 복습</em></p>
+</blockquote>
+<blockquote class="callout abstract" data-callout="abstract">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>Abstract</p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>빅데이터 아키텍처들은, “어떻게 하면 방대한 양의 데이터를 정확하게, 혹은 지연 시간 없이 실시간으로 처리하고 보여줄 수 있을까?” 라는 문제에 대한 해결책으로서 발전되어왔다.</p>
+</div>
+</blockquote>
+<h2 id="lambda">Lambda<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#lambda" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>by Nathan Marz (BackType, Twitter)</p>
+<pre><button class="expand-button" aria-label="Expand mermaid diagram" data-view-component="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3.72 3.72a.75.75 0 011.06 1.06L2.56 7h10.88l-2.22-2.22a.75.75 0 011.06-1.06l3.5 3.5a.75.75 0 010 1.06l-3.5 3.5a.75.75 0 11-1.06-1.06l2.22-2.22H2.56l2.22 2.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 010-1.06l3.5-3.5z"></path></svg></button><code class="mermaid" data-clipboard="&quot;graph LR\n    Source[\&quot;데이터 소스\&quot;]\n    \n    subgraph batch_layer [\&quot;Batch Layer\&quot;]\n        MasterDB[(\&quot;마스터 데이터셋 - HDFS / S3\&quot;)]\n        BatchCompute(\&quot;배치 컴퓨팅 - Spark / Hadoop\&quot;)\n    end\n    \n    subgraph speed_layer [\&quot;Speed Layer\&quot;]\n        StreamCompute(\&quot;스트림 컴퓨팅 - Storm / Spark Streaming\&quot;)\n    end\n    \n    subgraph serving_layer [\&quot;Serving Layer\&quot;]\n        ServingDB[(\&quot;서빙 DB - Druid / Pinot\&quot;)]\n    end\n    \n    Client[\&quot;대시보드 / 클라이언트\&quot;]\n\n    Source -->|\&quot;모든 데이터\&quot;| MasterDB\n    Source -->|\&quot;최신 이벤트\&quot;| StreamCompute\n    \n    MasterDB -->|\&quot;주기적 연산\&quot;| BatchCompute\n    BatchCompute -->|\&quot;배치 뷰 - 과거\&quot;| ServingDB\n    StreamCompute -->|\&quot;실시간 뷰 - 현재\&quot;| ServingDB\n    \n    ServingDB -->|\&quot;결과 병합\&quot;| Client&quot;">graph LR
+    Source[&quot;데이터 소스&quot;]
+    
+    subgraph batch_layer [&quot;Batch Layer&quot;]
+        MasterDB[(&quot;마스터 데이터셋 - HDFS / S3&quot;)]
+        BatchCompute(&quot;배치 컴퓨팅 - Spark / Hadoop&quot;)
+    end
+    
+    subgraph speed_layer [&quot;Speed Layer&quot;]
+        StreamCompute(&quot;스트림 컴퓨팅 - Storm / Spark Streaming&quot;)
+    end
+    
+    subgraph serving_layer [&quot;Serving Layer&quot;]
+        ServingDB[(&quot;서빙 DB - Druid / Pinot&quot;)]
+    end
+    
+    Client[&quot;대시보드 / 클라이언트&quot;]
+
+    Source -->|&quot;모든 데이터&quot;| MasterDB
+    Source -->|&quot;최신 이벤트&quot;| StreamCompute
+    
+    MasterDB -->|&quot;주기적 연산&quot;| BatchCompute
+    BatchCompute -->|&quot;배치 뷰 - 과거&quot;| ServingDB
+    StreamCompute -->|&quot;실시간 뷰 - 현재&quot;| ServingDB
+    
+    ServingDB -->|&quot;결과 병합&quot;| Client
+</code><div id="mermaid-container" role="dialog"><div id="mermaid-space"><div class="mermaid-content"></div></div></div></pre>
+<p>요구사항의 성격에 맞게 데이터 처리 레이어를 분리하고, 결과는 합쳐서 보여준다.</p>
+<ul>
+<li>배치 레이어(정확도) + 스피드/스트리밍 레이어(실시간)</li>
+<li>서빙 레이어(처리된 데이터)</li>
+</ul>
+<p>초기 하둡 시절 빅데이터 인프라는 배치 처리 중심이었음 <em>(Like 옵스나우 CUR 데이터를 스파크에서 밤새 몇 시간 걸려서 배치처리하던 것 처럼)</em></p>
+<p>배치는 전체 데이터를 다시 계산하므로 정확하지만, 한 번 도는 데 몇 시간이 걸려서 그 사이에 들어온 최신 데이터는 결과에 없다. 그래서 스피드 레이어가 “마지막 배치 이후에 들어온 데이터”만 빠르게 계산해 그 공백을 메우고, 다음 배치가 끝나면 그 구간은 배치 결과로 대체된다.</p>
+<h3 id="oss">OSS<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#oss" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h4 id="kafka-broker">Kafka (Broker)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#kafka-broker" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>분산 이벤트 스트리밍 플랫폼, 원천 데이터의 통로로서 배치, 스피드 레이어 양쪽에서 가져갈 수 있도록 하는 역할</p>
+<h4 id="spark-batch-processing">Spark (Batch Processing)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#spark-batch-processing" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>HDFS/S3에 적재된 <strong>대규모 데이터</strong>를 주기적으로 정확하게 계산</p>
+<h4 id="spark--storm-stream-processing">Spark / Storm (Stream Processing)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#spark--storm-stream-processing" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>Kafka에 produce된 데이터를 초 단위로 빠르게 집계</p>
+<h4 id="parquet">Parquet<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#parquet" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>배치에서 정제된 데이터를 디스크에 적재할 때 쓰는 열 기반 파일 포맷. 분석 쿼리(OLAP)는 일부 컬럼만 읽는 경우가 많아서 열 기반 포맷이 유리하다.</p>
+<h4 id="druid--pinot-serving">Druid / Pinot (Serving)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#druid--pinot-serving" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>스피드 레이어의 실시간 결과와 배치 레이어의 과거 결과를 묶어 사용자에게 응답하기 위한 서빙 데이터를 제공</p>
+<h3 id="단점">단점<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#단점" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>‘유지보수성’.<br/>
+결국 같은 집계 로직을 배치용과 실시간용으로 각각 따로 개발하고 유지보수해야한다. 두 구현의 결과가 서로 어긋나지 않게 맞추는 것도 부담이다.</p>
+<hr/>
+<h2 id="kappa">Kappa<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#kappa" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>by Jay Kreps, LinkedIn</p>
+<pre><button class="expand-button" aria-label="Expand mermaid diagram" data-view-component="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3.72 3.72a.75.75 0 011.06 1.06L2.56 7h10.88l-2.22-2.22a.75.75 0 011.06-1.06l3.5 3.5a.75.75 0 010 1.06l-3.5 3.5a.75.75 0 11-1.06-1.06l2.22-2.22H2.56l2.22 2.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 010-1.06l3.5-3.5z"></path></svg></button><code class="mermaid" data-clipboard="&quot;graph LR\n    Source[\&quot;데이터 소스\&quot;]\n    \n    subgraph stream_layer [\&quot;Stream Processing Layer\&quot;]\n        Kafka[(\&quot;메시지 브로커 - Kafka\&quot;)]\n        Flink(\&quot;스트림 연산 - Flink\&quot;)\n    end\n    \n    ServingDB[(\&quot;서빙 레이어 - 실시간 뷰\&quot;)]\n    Client[\&quot;대시보드 / 클라이언트\&quot;]\n\n    Source -->|\&quot;이벤트 스트림\&quot;| Kafka\n    Kafka -->|\&quot;실시간 처리\&quot;| Flink\n    Flink -->|\&quot;결과 적재\&quot;| ServingDB\n    ServingDB --> Client\n    \n    Kafka -.->|\&quot;과거 데이터 재생(Replay)\&quot;| Flink&quot;">graph LR
+    Source[&quot;데이터 소스&quot;]
+    
+    subgraph stream_layer [&quot;Stream Processing Layer&quot;]
+        Kafka[(&quot;메시지 브로커 - Kafka&quot;)]
+        Flink(&quot;스트림 연산 - Flink&quot;)
+    end
+    
+    ServingDB[(&quot;서빙 레이어 - 실시간 뷰&quot;)]
+    Client[&quot;대시보드 / 클라이언트&quot;]
+
+    Source -->|&quot;이벤트 스트림&quot;| Kafka
+    Kafka -->|&quot;실시간 처리&quot;| Flink
+    Flink -->|&quot;결과 적재&quot;| ServingDB
+    ServingDB --> Client
+    
+    Kafka -.->|&quot;과거 데이터 재생(Replay)&quot;| Flink
+</code><div id="mermaid-container" role="dialog"><div id="mermaid-space"><div class="mermaid-content"></div></div></div></pre>
+<ul>
+<li>only 스트리밍 레이어</li>
+<li>배치는 “과거 데이터를 처음부터 다시 흘려보내는 스트림 처리”로 본다. 그래서 배치 레이어가 따로 필요 없다.</li>
+</ul>
+<h3 id="oss-1">OSS<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#oss-1" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h4 id="kafka-brokerstorage">Kafka (Broker+Storage)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#kafka-brokerstorage" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>‘이벤트 스트리밍 플랫폼’ 역할 뿐만 아니라, 중장기간(ex. 몇 주치) 대규모 원본 데이터를 보관하는 저장소 역할까지 겸한다.</p>
+<h4 id="flink-stream-processing">Flink (Stream Processing)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#flink-stream-processing" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>Lambda 아키텍처처럼 배치, 스트림 프로세싱처리 로직을 이분화할 필요 없이, Flink 하나로 <strong>Kafka Topic의 데이터를 실시간 처리와 과거 데이터 재처리(Backfill)에 동일 로직을 적용</strong>할 수 있다.</p>
+<h3 id="단점-1">단점<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#단점-1" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>‘저장소로서의 Kafka의 한계’<br/>
+재처리(Reprocessing)을 위해서는 Kafka에 보관된 과거 데이터스트림을 처음부터 재생해서 처리 파이프라인을 태워야한다.<br/>
+이론적으로는 문제 없을지라도 본디 ‘이벤트 스트리밍 플랫폼’ 역할인 Kafka는 장기간의 PB급 원본 데이터를 저장하기에는 브로커 디스크 비용과 운영 부담이 크다. <em>(최근에는 오래된 데이터를 S3로 내리는 Tiered Storage 기능으로 이 한계가 일부 완화됨)</em><br/>
+또한 Kafka는 순서대로 읽는 로그 구조라서, OLAP 처럼 SQL을 통해 분석 쿼리(Ad-hoc)를 하기 위해 만들어지지 않음</p>
+<hr/>
+<h2 id="data-lakehouse">Data Lakehouse<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#data-lakehouse" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Databricks가 2020년경 정립한 용어</p>
+<pre><button class="expand-button" aria-label="Expand mermaid diagram" data-view-component="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3.72 3.72a.75.75 0 011.06 1.06L2.56 7h10.88l-2.22-2.22a.75.75 0 011.06-1.06l3.5 3.5a.75.75 0 010 1.06l-3.5 3.5a.75.75 0 11-1.06-1.06l2.22-2.22H2.56l2.22 2.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 010-1.06l3.5-3.5z"></path></svg></button><code class="mermaid" data-clipboard="&quot;graph LR\n    BatchSource[\&quot;배치 데이터\&quot;]\n    StreamSource[\&quot;스트림 데이터\&quot;]\n    \n    subgraph lakehouse_storage [\&quot;Data Lakehouse Storage\&quot;]\n        direction TB\n        S3[(\&quot;클라우드 스토리지 - S3 / ADLS\&quot;)]\n        Iceberg{\&quot;오픈 테이블 포맷 - Iceberg\&quot;}\n        \n        Bronze[\&quot;Bronze (원시)\&quot;]\n        Silver[\&quot;Silver (정제)\&quot;]\n        Gold[\&quot;Gold (집계)\&quot;]\n        \n        Iceberg --- Bronze\n        Iceberg --- Silver\n        Iceberg --- Gold\n        S3 --- Iceberg\n    end\n    \n    Spark(\&quot;Apache Spark (ETL)\&quot;)\n    DuckDB(\&quot;DuckDB / Athena (Ad-hoc 분석)\&quot;)\n    \n    Client[\&quot;BI 대시보드\&quot;]\n\n    BatchSource --> S3\n    StreamSource --> S3\n    \n    Bronze -->|\&quot;ETL\&quot;| Spark\n    Spark --> Silver\n    Silver -->|\&quot;ETL\&quot;| Spark\n    Spark --> Gold\n    \n    Gold --> DuckDB\n    DuckDB --> Client&quot;">graph LR
+    BatchSource[&quot;배치 데이터&quot;]
+    StreamSource[&quot;스트림 데이터&quot;]
+    
+    subgraph lakehouse_storage [&quot;Data Lakehouse Storage&quot;]
+        direction TB
+        S3[(&quot;클라우드 스토리지 - S3 / ADLS&quot;)]
+        Iceberg{&quot;오픈 테이블 포맷 - Iceberg&quot;}
+        
+        Bronze[&quot;Bronze (원시)&quot;]
+        Silver[&quot;Silver (정제)&quot;]
+        Gold[&quot;Gold (집계)&quot;]
+        
+        Iceberg --- Bronze
+        Iceberg --- Silver
+        Iceberg --- Gold
+        S3 --- Iceberg
+    end
+    
+    Spark(&quot;Apache Spark (ETL)&quot;)
+    DuckDB(&quot;DuckDB / Athena (Ad-hoc 분석)&quot;)
+    
+    Client[&quot;BI 대시보드&quot;]
+
+    BatchSource --> S3
+    StreamSource --> S3
+    
+    Bronze -->|&quot;ETL&quot;| Spark
+    Spark --> Silver
+    Silver -->|&quot;ETL&quot;| Spark
+    Spark --> Gold
+    
+    Gold --> DuckDB
+    DuckDB --> Client
+</code><div id="mermaid-container" role="dialog"><div id="mermaid-space"><div class="mermaid-content"></div></div></div></pre>
+<p>저렴한 클라우드 스토리지(데이터 레이크, ex. S3) + 데이터 웨어하우스의 관리 기능(트랜잭션, 스키마 관리)을 결합한 형태</p>
+<ul>
+<li>스토리지: S3 등의 데이터레이크로 일원화</li>
+<li>테이블 포맷: 데이터레이크에 <em>오픈 테이블 포맷</em> 을 얹어 스트림, 배치 처리 시 하나의 저장소를 Read/Write할 수 있게 한다.</li>
+<li>다이어그램의 Bronze → Silver → Gold는 <em>메달리온 아키텍처</em>라고 부르는 관례로, 같은 저장소 안에서 데이터를 원시 → 정제 → 집계 단계로 나누어 관리하는 방식이다.</li>
+</ul>
+<p>“처리 엔진(Flink/Spark)은 용도에 맞게 쪼개 쓰되, 데이터는 저렴하고 무한한 S3 한 곳에 다 모으고, Iceberg로 질서를 부여하자”</p>
+<h3 id="vs-lambda">vs Lambda<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#vs-lambda" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>레이크하우스에도 배치와 스트림 경로가 둘 다 있어서 람다와 비슷해 보인다. 하지만 람다처럼 동일한 데이터를 두 번 처리하는 것이 아니라, 데이터가 도착하는 운송 수단만 다른 것이다.</p>
+<p><em>람다</em>는 배치 데이터와 실시간 스트림 데이터의 <strong>저장소(ex. Redis vs HDFS)가 이분화</strong>되어있었다. 결과적으로 실시간 뷰와 배치 결과 뷰를 조회하기 위한 로직이 달라지고, 두 저장소의 데이터를 합쳐서 보여주기 위해서는 어플리케이션에서 복잡한 쿼리를 작성해야했다.</p>
+<p><em>데이터레이크하우스</em>에서는 S3 윗단 Iceberg와 같은 <strong>단일 목적지</strong>에 실시간, 배치 데이터가 전부 저장되며, 데이터 운송 수단(ex. Kafka &amp; Flink vs Spark)만 달라진다.<br/>
+표준화된 테이블 포맷(Iceberg)을 뒀기 때문에, 어느 방식으로 데이터가 도착했든 쿼리 엔진(Athena, DuckDB)는 하나의 SQL쿼리로 데이터를 JOIN/AGG 할 수 있다.<br/>
+즉, 따로 저장된 데이터 유형으로 인해 어플리케이션에서 복잡한 쿼리를 작성할 필요가 없어졌다.</p>
+<h3 id="oss-2">OSS<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#oss-2" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h4 id="iceberg-open-table-format">Iceberg (Open Table Format)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#iceberg-open-table-format" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>by Netflix. 스토리지 위의 소프트웨어 규칙.<br/>
+S3에는 Parquet 파일들이 흩어져 있을 뿐이다. Iceberg는 “지금 이 테이블은 어떤 파일들로 이루어져 있는가”를 <strong>파일 목록과 통계 정보를 기록한 메타데이터 파일</strong>로 관리한다. 쿼리 엔진은 스토리지를 직접 뒤지지 않고, 이 메타데이터를 먼저 읽어서 필요한 파일만 골라 읽는다.</p>
+<p>파이프라인의 핵심<br/>
+Flink가 스트리밍 데이터를 처리해서 스토리지에 저장하는 와중에도 Spark와 같은 배치 엔진이 기존 데이터를 안전하게 읽거나 덮어쓸 수 있도록 트랜잭션(ACID)을 보장해준다. 쓰기가 끝날 때마다 새 메타데이터 파일(스냅샷)을 만들고 “현재 스냅샷”을 한 번에 바꿔치기하는 방식이라서, 읽는 쪽은 쓰다 만 중간 상태를 볼 일이 없다.</p>
+<p>같은 역할의 포맷으로 Delta Lake(Databricks), Hudi(Uber)가 있다.</p>
+<h4 id="parquet-storage-format">Parquet (Storage Format)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#parquet-storage-format" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>S3 데이터 적재 포맷. 실제 데이터는 Parquet 파일에 들어 있고, Iceberg는 그 파일들을 테이블로 묶는 역할이다.</p>
+<h4 id="kafka--flink-data-ingestion--streaming">Kafka &amp; Flink (Data Ingestion &amp; Streaming)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#kafka--flink-data-ingestion--streaming" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>외부 원천 데이터를 실시간으로 받아 Iceberg 테이블로 지속적으로 적재</p>
+<h4 id="spark-batch--etl">Spark (Batch / ETL)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#spark-batch--etl" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>쌓여있는 Iceberg 테이블을 읽어 잘못된 부분 수정 / 대규모 JOIN / AI 학습용 피처 생성 등의 무거운 배치성 작업을 수행</p>
+<h4 id="arrow-in-memory-format">Arrow (In-memory Format)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#arrow-in-memory-format" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>열 기반 인메모리 데이터 포맷의 표준. DuckDB, Spark, ML 라이브러리가 메모리 위에서 같은 형식을 쓰기 때문에, 엔진 사이에 데이터를 넘길 때 변환(직렬화/역직렬화) 비용이 거의 들지 않는다. Parquet이 디스크 저장용이라면 Arrow는 메모리 연산용이다.</p>
+<h4 id="airflow">Airflow<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#airflow" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>배치 작업, 테이블 최적화(Compaction: 잘게 쪼개져 쌓인 작은 파일들을 큰 파일로 병합) 등의 순서를 조율</p>
+<hr/>
+<h2 id="streaming-lakehouse">Streaming Lakehouse<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#streaming-lakehouse" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>혹은 Real-time Lakehouse</p>
+<pre><button class="expand-button" aria-label="Expand mermaid diagram" data-view-component="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3.72 3.72a.75.75 0 011.06 1.06L2.56 7h10.88l-2.22-2.22a.75.75 0 011.06-1.06l3.5 3.5a.75.75 0 010 1.06l-3.5 3.5a.75.75 0 11-1.06-1.06l2.22-2.22H2.56l2.22 2.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 010-1.06l3.5-3.5z"></path></svg></button><code class="mermaid" data-clipboard="&quot;graph LR\n    Source[\&quot;데이터 소스\&quot;]\n    Kafka[(\&quot;Kafka - 실시간 버퍼\&quot;)]\n    \n    subgraph streaming_lakehouse [\&quot;Streaming Lakehouse\&quot;]\n        Table{\&quot;테이블 포맷 - Hudi / Paimon\&quot;}\n        LogStore[(\&quot;실시간 로그 - Append\&quot;)]\n        ParquetStore[(\&quot;압축 파일 - Parquet\&quot;)]\n        \n        Table --- LogStore\n        Table --- ParquetStore\n    end\n    \n    Flink(\&quot;Flink - 연속 쿼리\&quot;)\n    Spark(\&quot;Spark - 배치 분석\&quot;)\n    \n    ClientRealtime[\&quot;실시간 대시보드\&quot;]\n    ClientBatch[\&quot;무거운 Ad-hoc 분석\&quot;]\n\n    Source --> Kafka\n    Kafka -->|\&quot;1. 즉시 로그 쓰기\&quot;| LogStore\n    LogStore -.->|\&quot;2. 백그라운드 압축\&quot;| ParquetStore\n    \n    LogStore -->|\&quot;방금 들어온 데이터\&quot;| Flink\n    ParquetStore -->|\&quot;과거 압축 데이터\&quot;| Flink\n    Flink -->|\&quot;통합 실시간 서빙\&quot;| ClientRealtime\n    \n    ParquetStore --> Spark\n    Spark --> ClientBatch&quot;">graph LR
+    Source[&quot;데이터 소스&quot;]
+    Kafka[(&quot;Kafka - 실시간 버퍼&quot;)]
+    
+    subgraph streaming_lakehouse [&quot;Streaming Lakehouse&quot;]
+        Table{&quot;테이블 포맷 - Hudi / Paimon&quot;}
+        LogStore[(&quot;실시간 로그 - Append&quot;)]
+        ParquetStore[(&quot;압축 파일 - Parquet&quot;)]
+        
+        Table --- LogStore
+        Table --- ParquetStore
+    end
+    
+    Flink(&quot;Flink - 연속 쿼리&quot;)
+    Spark(&quot;Spark - 배치 분석&quot;)
+    
+    ClientRealtime[&quot;실시간 대시보드&quot;]
+    ClientBatch[&quot;무거운 Ad-hoc 분석&quot;]
+
+    Source --> Kafka
+    Kafka -->|&quot;1. 즉시 로그 쓰기&quot;| LogStore
+    LogStore -.->|&quot;2. 백그라운드 압축&quot;| ParquetStore
+    
+    LogStore -->|&quot;방금 들어온 데이터&quot;| Flink
+    ParquetStore -->|&quot;과거 압축 데이터&quot;| Flink
+    Flink -->|&quot;통합 실시간 서빙&quot;| ClientRealtime
+    
+    ParquetStore --> Spark
+    Spark --> ClientBatch
+</code><div id="mermaid-container" role="dialog"><div id="mermaid-space"><div class="mermaid-content"></div></div></div></pre>
+<h3 id="기존-lakehouse의-한계-분-단위-지연">기존 Lakehouse의 한계: 분 단위 지연<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#기존-lakehouse의-한계-분-단위-지연" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Parquet은 한 번 쓰면 수정할 수 없는 파일이라서, 데이터가 한 건 들어올 때마다 파일을 만들 수 없다. 그래서 일정량의 데이터를 모았다가 한 번에 파일로 쓰고 테이블에 반영(commit)한다. 이렇게 짧은 주기로 모아서 쓰는 방식을 Micro-batch라고 부르며, 이 주기만큼(보통 분 단위) 지연시간이 발생한다. 주기를 줄이면 작은 파일이 너무 많이 생겨서 조회 성능이 떨어진다.<br/>
+<em>→ 초 단위 실시간 형태로 보완 필요</em></p>
+<h3 id="보완">보완<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#보완" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>데이터가 들어오는 즉시, 쓰기가 빠른 <strong>로그 형태</strong>(뒤에 이어 붙이는 Append 방식)로 먼저 기록한다.
+<ul>
+<li>Apache Hudi(우버)의 Merge-on-Read 테이블, Apache Paimon(알리바바, Flink 진영)처럼 스트리밍 쓰기에 맞춰 설계된 포맷이 이 방식을 쓴다.</li>
+</ul>
+</li>
+<li>백그라운드에서 로그를 조회에 유리한 Parquet 파일로 별도 변환(Compaction)한다.</li>
+<li>조회할 때는 엔진이 “Parquet + 아직 변환되지 않은 로그”를 합쳐서 읽기 때문에 최신 데이터까지 보인다.</li>
+<li>기존에는 Kafka로 들어온 실시간 데이터와 S3의 과거 데이터를 별도 조회해서 애플리케이션 단에서 통합해야했음(Lambda의 잔해)
+<ul>
+<li>하나의 테이블에 대한 하나의 SQL로 실시간 데이터와 과거 데이터를 함께 조회 가능</li>
+</ul>
+</li>
+<li>다만 지연시간은 초~분 단위까지 줄어드는 것이고, ms 단위가 필요하면 여전히 Kafka 같은 로그 시스템을 직접 읽어야 한다.</li>
+</ul>
+<hr/>
+<h2 id="조직과-메타데이터-관점의-아키텍처">조직과 메타데이터 관점의 아키텍처<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#조직과-메타데이터-관점의-아키텍처" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>여기까지는 “데이터를 한 곳에 모아 어떻게 저장하고 처리할 것인가”에 대한 아키텍처였다. 아래 둘은 성격이 다르다. 저장/처리 기술이 아니라, <em>회사 규모가 커져 데이터와 조직이 여러 갈래로 나뉘었을 때 누가 어떻게 관리할 것인가</em>에 대한 접근법이다.</p>
+<h3 id="data-mesh">Data Mesh<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#data-mesh" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>by Zhamak Dehghani (Thoughtworks, 2019)<br/>
+‘조직 &amp; 도메인’ 중심 분산 아키텍처</p>
+<p>‘데이터 엔지니어링 팀’과 같은 소수 인원의 중앙 팀이 전사 데이터를 모두 관리하면, 그 팀이 병목이 된다. 결제, 추천, 마케팅 데이터는 각각 의미와 특성이 다른데 중앙 팀은 모든 도메인을 깊이 알 수 없고, 모든 요청이 한 팀에 몰리기 때문이다.</p>
+<p>그래서 MSA처럼 각 비즈니스 도메인(ex. 결제, 추천, 마케팅 등) 팀이 자기 데이터를 직접 소유하고 관리하도록 분산시킨다. 아래 원칙들로 구성된다.</p>
+<h4 id="data-as-a-product">Data as a Product<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#data-as-a-product" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ul>
+<li>도메인 팀은 자기 데이터를 다른 팀이 바로 쓸 수 있는 “제품”처럼 다룬다. 즉, 정제하고 문서화해서 품질을 책임진 상태로 <strong>사내 데이터 플랫폼</strong>에 공개(Produce)한다.</li>
+<li>이 데이터가 필요한 다른 도메인에서 가져다 쓰는(Consume) 형태</li>
+</ul>
+<h4 id="self-serve-인프라">Self-serve 인프라<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#self-serve-인프라" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ul>
+<li>즉, <strong>사내 데이터 플랫폼</strong>. 도메인 팀마다 인프라를 처음부터 만들 수는 없으므로, 중앙 데이터 팀은 데이터를 직접 관리하는 대신 플랫폼(저장소/파이프라인 템플릿, 카탈로그, 권한 관리 등)만 제공한다.</li>
+</ul>
+<h4 id="federated-governance">Federated Governance<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#federated-governance" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ul>
+<li>분산시키더라도 보안, 명명 규칙, 데이터 포맷 같은 공통 규칙은 전사 차원에서 정하고, 가능하면 플랫폼이 자동으로 강제한다. 이게 없으면 도메인마다 제각각이 되어 서로의 데이터를 쓸 수 없다.</li>
+</ul>
+<h4 id="사용-기술">사용 기술<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#사용-기술" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ul>
+<li>도메인별 작은 ‘Lakehouse’</li>
+<li>도메인 간 공유를 위한 프로토콜 / API / 데이터 카탈로그</li>
+</ul>
+<h3 id="data-fabric">Data Fabric<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#data-fabric" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Gartner 등이 정립한 개념. <em>‘메타데이터 기반’</em> 통합</p>
+<p>기업의 데이터는 여러 클라우드, 온프레미스, SaaS(CRM 등)에 물리적으로 흩어져 있다. 데이터 메시가 이 문제를 “조직과 책임을 나누는 것”으로 푼다면, 데이터 패브릭은 “기술 계층을 하나 얹는 것”으로 푼다.</p>
+<p>데이터 패브릭은 물리적으로 분산된 데이터를 옮기지 않고, 그 위에 가상의 통합 계층(패브릭)을 두어 하나처럼 조회하고 관리한다.</p>
+<p>핵심은 <strong>메타데이터</strong>(데이터에 대한 데이터: 어디에 어떤 테이블이 있고, 누가 쓰고, 어디서 만들어졌는지)다.</p>
+<ul>
+<li>Active Metadata: 카탈로그에 적어두기만 하는 수동적인 메타데이터가 아니라, 쿼리 로그나 사용 패턴 등을 계속 수집해서 갱신되는 메타데이터</li>
+<li>지식 그래프: “이 CRM의 고객 ID와 저 Lakehouse의 user_id는 같은 것”처럼 데이터 간의 관계를 연결해 둔 것</li>
+<li>이 둘 위에 AI/ML을 얹어서 데이터 탐색, 연결, 통합 작업을 자동화하는 것을 지향한다.</li>
+</ul>
+<p>ex) 작년 우수 고객 명단 조회 → 패브릭 계층이 메타데이터를 보고 Lakehouse, CRM, Log 중 어디에 관련 데이터가 있는지 찾아 연결해서 조회</p>
+<p>대신 고도화된 메타데이터 관리 솔루션(Atlan, Alation 등 데이터 카탈로그)과 분산 쿼리 엔진(Starburst/Trino 등)이 필요하다. 특정 제품이라기보다 지향점에 가까운 개념이라, 실제 자동화 수준은 솔루션마다 차이가 크다.</p>
+<p>메시와 패브릭은 한쪽이 다른 쪽을 대체하는 관계가 아니다. 메시는 조직 운영 방식이고 패브릭은 기술 계층이라서 함께 쓸 수 있다.</p>
+<hr/>
+<h2 id="진화-과정">진화 과정<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#진화-과정" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>결론적으로,</p>
+<ol>
+<li>정확한 배치 결과에 더해 실시간 데이터도 조회해야 한다 (Lambda)</li>
+<li>로직의 중복을 줄인다 (Lambda → Kappa)</li>
+<li>저장소를 저렴한 오브젝트 스토리지 하나로 통일하고, 컴퓨팅 엔진은 분리해 용도별로 쓴다 (Kappa → Lakehouse)</li>
+<li>통일된 저장소의 지연시간을 줄인다 (Lakehouse → Streaming Lakehouse)</li>
+<li>데이터 중앙화로 인한 조직의 병목을 해소하기 위해 도메인별로 소유권을 나눈다 (Data Mesh)</li>
+<li>흩어진 데이터를 메타데이터 계층으로 연결한다 (Data Fabric)</li>
+</ol>
+<p>의 단계로 진화해온 것으로 보인다. 1<del>4는 저장/처리 기술의 흐름이고, 5</del>6은 그 위에서 조직과 관리 방식을 다루는 별도의 축이다.</p></div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul></ul></footer></div></div></body><script src="../static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../postscript-bc613ab7.js" type="module" data-persist="true"></script></html>
